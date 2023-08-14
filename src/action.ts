@@ -21,6 +21,8 @@ export function filterConventionalCommits(commits: commitLib.ICommit[]): commitL
   return commits
     .map(c => {
       try {
+        // Remove the pull request number from the subject
+        c.subject = c.subject.replace(/\s*\(#\d+\)\s*$/, '');
         return commitLib.getConventionalCommit(c);
       } catch (error) {
         if (!(error instanceof commitLib.ConventionalCommitError)) throw error;
